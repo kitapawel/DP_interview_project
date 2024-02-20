@@ -313,7 +313,13 @@ MonoBehaviour:
   bottomLimit: -4
   leftLimit: -4
   rightLimit: 4
-  AIResolution: 3
+  OrderFrequency: 3
+  unitsToSpawn:
+  - {fileID: 9132917958487808457, guid: a68671ae16de4a9449ab2461518804d2, type: 3}
+  unitMaxCount: 30
+  spawnLocations: []
+  SpawnMinFrequency: 0.1
+  SpawnMaxFrequency: 0.5
 --- !u!4 &1116458203
 Transform:
   m_ObjectHideFlags: 0

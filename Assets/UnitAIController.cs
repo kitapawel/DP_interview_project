@@ -1,30 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class UnitAIController : MonoBehaviour
 {
+    [Header("Unit order settings:")]
     public List<Unit> units = new List<Unit>();
     public float topLimit = 4f;
     public float bottomLimit = -4f;
     public float leftLimit = -4f;
     public float rightLimit = 4f;
-    public float AIResolution = 3f;
+    public float OrderFrequency = 3f;
+
+    [Header("Unit spawning frequency:")]
+    public Unit[] unitsToSpawn;
+    public int unitMaxCount = 30;
+    public Transform[] spawnLocations;
+    public float SpawnMinFrequency = 2f;
+    public float SpawnMaxFrequency = 6f;
 
     void Start()
     {
-        InvokeRepeating("GiveOrders", 0.1f, AIResolution);
+        InvokeRepeating("SpawnUnits", 0.1f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
+        InvokeRepeating("GiveOrders", 0.2f, OrderFrequency);
     }
 
 
     private void GiveOrders()
     {
+        if (units.Count <= 0) { return; }
+
         foreach (Unit u in units)
         {
-            float xCoord = Random.Range(leftLimit, rightLimit);
-            float yCoord = Random.Range(topLimit, bottomLimit);
-            u.SetTargetCoordinate(new Vector2(xCoord, yCoord));
+            
+            u.SetTargetCoordinate(DetermineRandomCoordinate());
         }
     }
+    private void SpawnUnits()
+    {        
+        if (unitsToSpawn.Length <= 0) { return; }
+        if (units.Count > unitMaxCount) { return; }   
+        int index = Random.Range(0, unitsToSpawn.Length);
+        Unit u = Instantiate(unitsToSpawn[index], transform);
+        units.Add(u);
+        u.transform.parent = null;
+        u.SetTargetCoordinate(DetermineRandomCoordinate());
+    }
+    private float DetermineRandomSpawnFrequency(float min, float max)
+    {
+        float result = Random.Range(min, max);
+        return result;
+    }
+    private Vector2 DetermineRandomCoordinate()
+    {
+        float xCoord = Random.Range(leftLimit, rightLimit);
+        float yCoord = Random.Range(topLimit, bottomLimit);
+        Vector2 result = new Vector2(xCoord, yCoord);
+        return result;
+    }
+
+
 
 }
