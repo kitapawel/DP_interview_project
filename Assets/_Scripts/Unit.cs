@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-
 public class Unit : MonoBehaviour
 {
     [Header("Unit stats:")]
@@ -16,6 +13,9 @@ public class Unit : MonoBehaviour
     public Vector2 targetCoordinate;
     public bool isMoving;
     public bool isFacingRight = true;
+    //The following bool is set by animation events in Unity editor
+    public bool isAttacking = false;
+    public Action<Unit> OnDeath;
 
     [Header("Animation parameters:")]
     private Animator animator;
@@ -51,6 +51,7 @@ public class Unit : MonoBehaviour
 
     private void MoveTowardsTarget()
     {
+        if (isAttacking) { return; }
         if (HasReachedTargetCoordinate())
         {
             ChangeAnimationState(ANIM_IDLE);
@@ -109,7 +110,7 @@ public class Unit : MonoBehaviour
 
         //TODO stop movement, trigger attack
         Debug.Log("Attack!");
-        int attackRoll = Random.Range(0, 2);
+        int attackRoll = UnityEngine.Random.Range(0, 2);
         if (attackRoll == 0) { ChangeAnimationState(ANIM_ATT1); }
         if (attackRoll == 1) { ChangeAnimationState(ANIM_ATT2); }
         Unit u = collision.gameObject.GetComponent<Unit>();
@@ -137,5 +138,14 @@ public class Unit : MonoBehaviour
         GetComponent<Rigidbody2D>().simulated = false;
         ChangeAnimationState(ANIM_DIE);
         isAlive = false;
+        OnDeath?.Invoke(this);
+    }
+    private void IsAttackingTrue()
+    {
+        isAttacking = true;        
+    }
+    private void IsAttackingFalse()
+    {
+        isAttacking = false;
     }
 }

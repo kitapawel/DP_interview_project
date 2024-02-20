@@ -32,8 +32,7 @@ public class UnitAIController : MonoBehaviour
         if (units.Count <= 0) { return; }
 
         foreach (Unit u in units)
-        {
-            
+        {            
             u.SetTargetCoordinate(DetermineRandomCoordinate());
         }
     }
@@ -44,6 +43,7 @@ public class UnitAIController : MonoBehaviour
         int index = Random.Range(0, unitsToSpawn.Length);
         Unit u = Instantiate(unitsToSpawn[index], transform);
         units.Add(u);
+        u.OnDeath += RemoveUnit;
         u.transform.parent = null;
         u.SetTargetCoordinate(DetermineRandomCoordinate());
     }
@@ -58,6 +58,11 @@ public class UnitAIController : MonoBehaviour
         float yCoord = Random.Range(topLimit, bottomLimit);
         Vector2 result = new Vector2(xCoord, yCoord);
         return result;
+    }
+    private void RemoveUnit(Unit unit)
+    {
+        units.Remove(unit);
+        unit.OnDeath -= RemoveUnit;
     }
 
 
