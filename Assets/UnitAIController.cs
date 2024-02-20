@@ -17,7 +17,9 @@ public class UnitAIController : MonoBehaviour
     public Unit[] unitsToSpawn;
     public int unitMaxCount = 30;
     public Transform[] spawnLocations;
+    [Range(2f, 5.99f)]
     public float SpawnMinFrequency = 2f;
+    [Range(6f, 10f)]
     public float SpawnMaxFrequency = 6f;
 
     void Start()

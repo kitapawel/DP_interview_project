@@ -17,6 +17,12 @@ public class Unit : MonoBehaviour
     public bool isAttacking = false;
     public Action<Unit> OnDeath;
 
+    [Header("Sound setup")]
+    private AudioSource audioSource;
+    public AudioClip swingSFX;
+    public AudioClip hitSFX;
+    public AudioClip dieSFX;
+
     [Header("Animation parameters:")]
     private Animator animator;
     private string currentAnimaton;
@@ -29,6 +35,7 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         currentHP = maxHP;
         name = NameGenerator.GenerateRandomName();
@@ -107,12 +114,10 @@ public class Unit : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        //TODO stop movement, trigger attack
-        Debug.Log("Attack!");
         int attackRoll = UnityEngine.Random.Range(0, 2);
         if (attackRoll == 0) { ChangeAnimationState(ANIM_ATT1); }
         if (attackRoll == 1) { ChangeAnimationState(ANIM_ATT2); }
+        PlaySound(swingSFX);
         Unit u = collision.gameObject.GetComponent<Unit>();
         if (u != null)
         {
@@ -124,6 +129,7 @@ public class Unit : MonoBehaviour
         if (currentHP > 0) 
         {
             //TODO stop move, push back
+            PlaySound(hitSFX);
             currentHP--;
         }
         if (currentHP <= 0)
@@ -137,8 +143,14 @@ public class Unit : MonoBehaviour
         //TODO push back
         GetComponent<Rigidbody2D>().simulated = false;
         ChangeAnimationState(ANIM_DIE);
+        PlaySound(dieSFX);
         isAlive = false;
         OnDeath?.Invoke(this);
+    }
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource == null) { return; }
+        audioSource.PlayOneShot(clip);
     }
     private void IsAttackingTrue()
     {
