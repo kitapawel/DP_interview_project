@@ -18,10 +18,10 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     public bool isAttacking = false;
     public GameObject selectionIndicator;
     private SpriteRenderer spriteRenderer;
-    private int CORPSE_SORTING_LAYER = 4;
-    Color REGULAR_COLOR = new Color(1f, 1f, 1f); 
-    Color WOUNDED_COLOR = new Color(1f, 0.86f, 0.8f);
-    Color HEAVY_WOUNDED_COLOR = new Color(1f, 0.55f, 0.55f);
+    private int CORPSE_SORTING_LAYER = 3;
+    private Color REGULAR_COLOR = new Color(1f, 1f, 1f);
+    private Color WOUNDED_COLOR = new Color(1f, 0.86f, 0.8f);
+    private Color HEAVY_WOUNDED_COLOR = new Color(1f, 0.55f, 0.55f);
 
     public Action OnHit;
     public Action<Unit> OnDeath;

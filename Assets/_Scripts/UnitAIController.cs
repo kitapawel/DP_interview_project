@@ -5,6 +5,7 @@ public class UnitAIController : MonoBehaviour
 {
     [Header("Unit order settings:")]
     public List<Unit> units = new List<Unit>();
+    public BoardController gameBoard;
     public float topLimit = 4f;
     public float bottomLimit = -4f;
     public float leftLimit = -4f;
@@ -22,6 +23,7 @@ public class UnitAIController : MonoBehaviour
 
     void Start()
     {
+        CalculateBoardLimits();
         InvokeRepeating("SpawnUnits", 0.1f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
         InvokeRepeating("GiveOrders", 0.2f, OrderFrequency);
     }
@@ -61,5 +63,21 @@ public class UnitAIController : MonoBehaviour
     {
         units.Remove(unit);
         unit.OnDeath -= RemoveUnit;
+    }
+    private void CalculateBoardLimits()
+    {
+        if (gameBoard == null)
+        {
+            gameBoard = FindObjectOfType<BoardController>();
+            if (gameBoard == null)
+            {
+                Debug.LogError("No board for the game!");
+            }
+        }
+        topLimit = gameBoard.boardYSize / 2f - 0.6f;
+        bottomLimit = (gameBoard.boardYSize / 2f - 0.1f) * -1f;
+        leftLimit = (gameBoard.boardXSize / 2f - 0.3f) * -1f;
+        rightLimit = gameBoard.boardXSize / 2f - 0.3f;
+
     }
 }
