@@ -133,6 +133,10 @@ MonoBehaviour:
   isFacingRight: 1
   isAttacking: 0
   selectionIndicator: {fileID: 5532604138598472202}
+  bloodFX:
+  - {fileID: 5039988273795388757, guid: 11b044058f20a5343a1b59df250b9139, type: 3}
+  - {fileID: 5258346861993561815, guid: e5f31e7664b98a84d8abe587250232f5, type: 3}
+  - {fileID: 7693247248025058242, guid: 6d25af0ab116d5b4ab7b45b59b2e218e, type: 3}
   swingSFX: {fileID: 8300000, guid: d874aedcdf5ea7b42b463ec653746047, type: 3}
   hitSFX: {fileID: 8300000, guid: b5435cefb7b4d784bb3d37df1a62030a, type: 3}
   dieSFX: {fileID: 8300000, guid: 12a46321ce1e8c349baab42a26f04a45, type: 3}

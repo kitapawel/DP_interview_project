@@ -36,6 +36,14 @@ public class SpriteSelector : MonoBehaviour
             Destroy(this);
         }
     }
+    private void Update()
+    {
+        if (selectedUnit == null) { return; }
+        if (Input.GetMouseButtonDown(1)) 
+        {
+            DeselectPreviousUnit();
+        }
+    }
     public void SelectUnit(Unit u)
     {
         DeselectPreviousUnit();

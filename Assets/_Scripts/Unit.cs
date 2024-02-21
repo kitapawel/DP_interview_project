@@ -18,10 +18,12 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     public bool isAttacking = false;
     public GameObject selectionIndicator;
     private SpriteRenderer spriteRenderer;
+    private int BLOOD_SORTING_LAYER = 2;
     private int CORPSE_SORTING_LAYER = 3;
     private Color REGULAR_COLOR = new Color(1f, 1f, 1f);
     private Color WOUNDED_COLOR = new Color(1f, 0.86f, 0.8f);
     private Color HEAVY_WOUNDED_COLOR = new Color(1f, 0.55f, 0.55f);
+    public SpriteRenderer[] bloodFX;
 
     public Action OnHit;
     public Action<Unit> OnDeath;
@@ -37,7 +39,6 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     private string currentAnimaton;
     private string ANIM_IDLE = "Idle";
     private string ANIM_WALK = "Walk";
-    private string ANIM_HIT = "GetHit";
     private string ANIM_DIE = "Die";
     private string ANIM_ATT1 = "Attack1";
     private string ANIM_ATT2 = "Attack2";
@@ -140,6 +141,7 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
         if (currentHP > 0) 
         {
             PlaySound(hitSFX);
+            SplashBlood();
             currentHP--;
             SetWoundedColor();
             OnHit?.Invoke();
@@ -182,6 +184,14 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     {
         if (audioSource == null) { return; }
         audioSource.PlayOneShot(clip);
+    }
+    private void SplashBlood()
+    {
+        if (bloodFX.Length <= 0) { return; }
+        int index = UnityEngine.Random.Range(0, bloodFX.Length);
+        SpriteRenderer blood = Instantiate(bloodFX[index], transform);
+        blood.sortingOrder = BLOOD_SORTING_LAYER;
+        blood.transform.parent = null;
     }
     public string GetName()
     {
