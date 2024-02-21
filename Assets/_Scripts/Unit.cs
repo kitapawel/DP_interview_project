@@ -1,7 +1,5 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Unit : MonoBehaviour, IProvideUnitDetails
 {
@@ -19,6 +17,11 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     //The following bool is set by animation events in Unity editor
     public bool isAttacking = false;
     public GameObject selectionIndicator;
+    private SpriteRenderer spriteRenderer;
+    private int CORPSE_SORTING_LAYER = 4;
+    Color REGULAR_COLOR = new Color(1f, 1f, 1f); 
+    Color WOUNDED_COLOR = new Color(1f, 0.86f, 0.8f);
+    Color HEAVY_WOUNDED_COLOR = new Color(1f, 0.55f, 0.55f);
 
     public Action OnHit;
     public Action<Unit> OnDeath;
@@ -44,6 +47,7 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
         selectionIndicator.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         currentHP = maxHP;
         name = NameGenerator.GenerateRandomName();
         unitName = name;
@@ -135,9 +139,9 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     {
         if (currentHP > 0) 
         {
-            //TODO stop move, push back
             PlaySound(hitSFX);
             currentHP--;
+            SetWoundedColor();
             OnHit?.Invoke();
         }
         if (currentHP <= 0)
@@ -145,14 +149,33 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
             Die();
         }
     }
+    private void SetWoundedColor()
+    {
+        //Percentage value introduced if for some reason other HP system is introduced later
+        float currentHPPercentage = (float)currentHP / (float)maxHP;
+        Debug.Log(currentHPPercentage);
+        if (currentHPPercentage >= 1f)
+        {
+            spriteRenderer.color = REGULAR_COLOR;
+        } else if (currentHPPercentage < 1f && currentHPPercentage >= 0.66f)
+        {
+            spriteRenderer.color = WOUNDED_COLOR;
+        }
+        else if (currentHPPercentage < 0.66f && currentHPPercentage >= 0.33f)
+        {
+            spriteRenderer.color = HEAVY_WOUNDED_COLOR;
+        } else
+        {            
+            spriteRenderer.color = REGULAR_COLOR;
+        }
+    }
     private void Die()
     {
-        //TODO remove from unit list
-        //TODO push back
         GetComponent<Rigidbody2D>().simulated = false;
         ChangeAnimationState(ANIM_DIE);
         PlaySound(dieSFX);
         isAlive = false;
+        spriteRenderer.sortingOrder = CORPSE_SORTING_LAYER;
         OnDeath?.Invoke(this);
     }
     private void PlaySound(AudioClip clip)
@@ -186,7 +209,7 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
             selectionIndicator.SetActive(false);
         }
     }
-
+    //The following methods are used in the Animator despite being greyed out in VS Studio
     private void IsAttackingTrue()
     {
         isAttacking = true;        
