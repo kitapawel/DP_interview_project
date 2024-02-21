@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MarkoPolo : MonoBehaviour
+public class MarkoPoloUI : MonoBehaviour
 {
     public TextMeshProUGUI textMeshPro;
     public Button solveButton;
@@ -37,7 +37,6 @@ public class MarkoPolo : MonoBehaviour
 
             textMeshPro.text += output + "\n";
         }
-
     }
     private void BasicSolution()
     {
@@ -45,7 +44,7 @@ public class MarkoPolo : MonoBehaviour
         {
             if (i % 3 == 0 && i % 5 == 0)
             {
-                Debug.Log("MarkoPolo");
+                Debug.Log("MarkoPoloUI");
             }
             else if (i % 3 == 0)
             {

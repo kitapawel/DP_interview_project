@@ -1,6 +1,9 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
-public class Unit : MonoBehaviour
+using UnityEngine.EventSystems;
+
+public class Unit : MonoBehaviour, IProvideUnitDetails
 {
     [Header("Unit stats:")]
     public string unitName;
@@ -15,6 +18,9 @@ public class Unit : MonoBehaviour
     public bool isFacingRight = true;
     //The following bool is set by animation events in Unity editor
     public bool isAttacking = false;
+    public GameObject selectionIndicator;
+
+    public Action OnHit;
     public Action<Unit> OnDeath;
 
     [Header("Sound setup")]
@@ -35,6 +41,7 @@ public class Unit : MonoBehaviour
 
     void Start()
     {
+        selectionIndicator.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         currentHP = maxHP;
@@ -131,6 +138,7 @@ public class Unit : MonoBehaviour
             //TODO stop move, push back
             PlaySound(hitSFX);
             currentHP--;
+            OnHit?.Invoke();
         }
         if (currentHP <= 0)
         {
@@ -152,6 +160,33 @@ public class Unit : MonoBehaviour
         if (audioSource == null) { return; }
         audioSource.PlayOneShot(clip);
     }
+    public string GetName()
+    {
+        return unitName;
+    }
+    public string GetHP()
+    {
+        string hp = "HP: " + currentHP.ToString();
+        return hp;
+    }
+
+    public void OnMouseDown()
+    {
+        SpriteSelector s = FindObjectOfType<SpriteSelector>();
+        s.SelectUnit(this);
+    }
+
+    public void Select(bool value)
+    {
+        if (value) 
+        {
+            selectionIndicator.SetActive(true);
+        } else
+        {
+            selectionIndicator.SetActive(false);
+        }
+    }
+
     private void IsAttackingTrue()
     {
         isAttacking = true;        

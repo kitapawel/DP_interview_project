@@ -27,8 +27,6 @@ public class UnitAIController : MonoBehaviour
         InvokeRepeating("SpawnUnits", 0.1f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
         InvokeRepeating("GiveOrders", 0.2f, OrderFrequency);
     }
-
-
     private void GiveOrders()
     {
         if (units.Count <= 0) { return; }
@@ -66,7 +64,4 @@ public class UnitAIController : MonoBehaviour
         units.Remove(unit);
         unit.OnDeath -= RemoveUnit;
     }
-
-
-
 }
