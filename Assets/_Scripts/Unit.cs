@@ -127,7 +127,7 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     }
     void ChangeAnimationState(string newAnimation)
     {
-        if (!isAlive) { return; }
+        //if (!isAlive) { return; }
         if (currentAnimaton != newAnimation)
         {
             animator.Play(newAnimation);
@@ -136,6 +136,7 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!isAlive) { return; }
         int attackRoll = UnityEngine.Random.Range(0, 2);
         if (attackRoll == 0) { ChangeAnimationState(ANIM_ATT1); }
         if (attackRoll == 1) { ChangeAnimationState(ANIM_ATT2); }
@@ -183,10 +184,11 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     }
     private void Die()
     {
+        if (!isAlive) { return; }
+        isAlive = false;
         GetComponent<Rigidbody2D>().simulated = false;
         ChangeAnimationState(ANIM_DIE);
         PlaySound(dieSFX);
-        isAlive = false;
         spriteRenderer.sortingOrder = CORPSE_SORTING_LAYER;
         OnDeath?.Invoke(this);
     }

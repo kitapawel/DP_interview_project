@@ -4,7 +4,6 @@ using UnityEngine;
 public class UnitAIController : MonoBehaviour
 {
     [Header("Unit order settings:")]
-    [SerializeField]
     private List<Unit> units = new List<Unit>();
     [SerializeField]
     private BoardController gameBoard;
@@ -37,8 +36,8 @@ public class UnitAIController : MonoBehaviour
     {
         CalculateBoardLimits();
         SpawnInitialUnits();
-        InvokeRepeating("SpawnUnitsRandomly", 5f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
-        InvokeRepeating("GiveOrders", 0.2f, OrderFrequency);
+        InvokeRepeating("SpawnUnitsRandomly", 2f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
+        InvokeRepeating("GiveOrders", 1f, OrderFrequency);
     }
     private void GiveOrders()
     {
@@ -96,7 +95,10 @@ public class UnitAIController : MonoBehaviour
     private void RemoveUnit(Unit unit)
     {
         units.Remove(unit);
-        unit.OnDeath -= RemoveUnit;
+        if (unit != null)
+        {
+            unit.OnDeath -= RemoveUnit;
+        }
     }
     private void CalculateBoardLimits()
     {
