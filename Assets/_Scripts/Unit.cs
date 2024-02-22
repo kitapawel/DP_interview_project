@@ -4,35 +4,45 @@ using UnityEngine;
 public class Unit : MonoBehaviour, IProvideUnitDetails
 {
     [Header("Unit stats:")]
-    public string unitName;
-    public int maxHP = 3;
-    public int currentHP;
-    public bool isAlive = true;
-    public float speed = 5f;
+    [SerializeField]
+    private string unitName;
+    [SerializeField]
+    private int maxHP = 3;
+    [SerializeField]
+    private int currentHP;
+    [SerializeField]
+    private bool isAlive = true;
+    [SerializeField]
+    private float speed = 5f;
 
     [Header("Unit setup:")]
-    public Vector2 targetCoordinate;
-    public bool isMoving;
-    public bool isFacingRight = true;
+    [SerializeField]
+    private Vector2 targetCoordinate;
+    private bool isMoving;
+    private bool isFacingRight = true;
     //The following bool is set by animation events in Unity editor
-    public bool isAttacking = false;
-    public GameObject selectionIndicator;
+    private bool isAttacking = false;
+    [SerializeField]
+    private GameObject selectionIndicator;
     private SpriteRenderer spriteRenderer;
     private int BLOOD_SORTING_LAYER = 2;
     private int CORPSE_SORTING_LAYER = 3;
     private Color REGULAR_COLOR = new Color(1f, 1f, 1f);
     private Color WOUNDED_COLOR = new Color(1f, 0.86f, 0.8f);
     private Color HEAVY_WOUNDED_COLOR = new Color(1f, 0.55f, 0.55f);
-    public SpriteRenderer[] bloodFX;
-
+    [SerializeField]
+    private SpriteRenderer[] bloodFX;
     public Action OnHit;
     public Action<Unit> OnDeath;
 
     [Header("Sound setup")]
     private AudioSource audioSource;
-    public AudioClip swingSFX;
-    public AudioClip hitSFX;
-    public AudioClip dieSFX;
+    [SerializeField]
+    private AudioClip swingSFX;
+    [SerializeField]
+    private AudioClip hitSFX;
+    [SerializeField]
+    private AudioClip dieSFX;
 
     [Header("Animation parameters:")]
     private Animator animator;

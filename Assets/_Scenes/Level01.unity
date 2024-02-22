@@ -956,7 +956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -82.996, y: -144.09}
+  m_AnchoredPosition: {x: -82.99609, y: -144.08997}
   m_SizeDelta: {x: 372.5479, y: 709.8219}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &735041559
@@ -2625,6 +2625,7 @@ MonoBehaviour:
   textMeshPro: {fileID: 1868540266}
   solveButton: {fileID: 0}
   blood: {fileID: 0}
+  bloodValue: 0
   sacrificeRequirement: 10
 --- !u!114 &2055172309
 MonoBehaviour:

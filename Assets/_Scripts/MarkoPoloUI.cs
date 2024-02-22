@@ -4,11 +4,16 @@ using UnityEngine.UI;
 
 public class MarkoPoloUI : MonoBehaviour
 {
-    public TextMeshProUGUI textMeshPro;
-    public Button solveButton;
-    public Image blood;
+    [SerializeField]
+    private TextMeshProUGUI textMeshPro;
+    [SerializeField]
+    private Button solveButton;
+    [SerializeField]
+    private Image blood;
+    [SerializeField]
     private int bloodValue = 0;
-    public int sacrificeRequirement = 10;
+    [SerializeField]
+    private int sacrificeRequirement = 10;
 
     private void Start()
     {

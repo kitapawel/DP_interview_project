@@ -4,22 +4,31 @@ using UnityEngine;
 public class UnitAIController : MonoBehaviour
 {
     [Header("Unit order settings:")]
-    public List<Unit> units = new List<Unit>();
-    public BoardController gameBoard;
-    public float topLimit = 4f;
-    public float bottomLimit = -4f;
-    public float leftLimit = -4f;
-    public float rightLimit = 4f;
-    public float OrderFrequency = 3f;
+    [SerializeField]
+    private List<Unit> units = new List<Unit>();
+    [SerializeField]
+    private BoardController gameBoard;
+    [SerializeField]
+    private float topLimit = 4f;
+    private float bottomLimit = -4f;
+    private float leftLimit = -4f;
+    private float rightLimit = 4f;
+    [SerializeField]
+    private float OrderFrequency = 3f;
 
     [Header("Unit spawning frequency:")]
-    public Unit[] unitsToSpawn;
-    public int unitMaxCount = 30;
-    public Transform[] spawnLocations;
+    [SerializeField]
+    private Unit[] unitsToSpawn;
+    [SerializeField]
+    private int unitMaxCount = 30;
+    [SerializeField]
+    private Transform[] spawnLocations;
     [Range(2f, 5.99f)]
-    public float SpawnMinFrequency = 2f;
+    [SerializeField]
+    private float SpawnMinFrequency = 2f;
     [Range(6f, 10f)]
-    public float SpawnMaxFrequency = 6f;
+    [SerializeField]
+    private float SpawnMaxFrequency = 6f;
 
     void Start()
     {
@@ -74,10 +83,9 @@ public class UnitAIController : MonoBehaviour
                 Debug.LogError("No board for the game!");
             }
         }
-        topLimit = gameBoard.boardYSize / 2f - 0.6f;
-        bottomLimit = (gameBoard.boardYSize / 2f - 0.1f) * -1f;
-        leftLimit = (gameBoard.boardXSize / 2f - 0.3f) * -1f;
-        rightLimit = gameBoard.boardXSize / 2f - 0.3f;
-
+        topLimit = gameBoard.BoardYSize / 2f - 0.6f;
+        bottomLimit = (gameBoard.BoardYSize / 2f - 0.1f) * -1f;
+        leftLimit = (gameBoard.BoardXSize / 2f - 0.3f) * -1f;
+        rightLimit = gameBoard.BoardXSize / 2f - 0.3f;
     }
 }

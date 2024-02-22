@@ -20,10 +20,12 @@ public class SpriteSelector : MonoBehaviour
             return _instance;
         }
     }
-
-    public Unit selectedUnit = null;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI HPtext;
+    [SerializeField]
+    private Unit selectedUnit = null;
+    [SerializeField]
+    private TextMeshProUGUI nameText;
+    [SerializeField]
+    private TextMeshProUGUI HPtext;
     private void Awake()
     {
         if (_instance == null)
