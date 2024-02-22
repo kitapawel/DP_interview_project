@@ -4,10 +4,9 @@ using UnityEngine;
 public class UnitAIController : MonoBehaviour
 {
     [Header("Unit order settings:")]
+    [SerializeField]
     private List<Unit> units = new List<Unit>();
-    [SerializeField]
     private BoardController gameBoard;
-    [SerializeField]
     private float topLimit = 4f;
     private float bottomLimit = -4f;
     private float leftLimit = -4f;
@@ -17,7 +16,7 @@ public class UnitAIController : MonoBehaviour
 
     [Header("Unit spawning frequency:")]
     [SerializeField]
-    [Range(0, 4)]
+    [Range(3, 5)]
     private int initialUnitsToSpawn = 4;
     [SerializeField]
     private Unit[] unitsToSpawn;
@@ -25,10 +24,10 @@ public class UnitAIController : MonoBehaviour
     private int unitMaxCount = 30;
     [SerializeField]
     private Transform[] spawnLocations;
-    [Range(2f, 5.99f)]
+    [Range(2f, 3.99f)]
     [SerializeField]
     private float SpawnMinFrequency = 2f;
-    [Range(6f, 10f)]
+    [Range(4f, 6f)]
     [SerializeField]
     private float SpawnMaxFrequency = 6f;
 

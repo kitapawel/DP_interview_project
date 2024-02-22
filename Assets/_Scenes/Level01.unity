@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &147901021 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1866634001902561236, guid: 98fba7d39323d034cb0890615a350cef, type: 3}
-  m_PrefabInstance: {fileID: 8969771211719122065}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1c174a6cf8625468482f77871968a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &664856648
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,9 +512,13 @@ PrefabInstance:
       value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 6834275976811160192, guid: b5a45792fc501ba429651436af222804, type: 3}
-      propertyPath: gameBoard
-      value: 
-      objectReference: {fileID: 147901021}
+      propertyPath: SpawnMaxFrequency
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6834275976811160192, guid: b5a45792fc501ba429651436af222804, type: 3}
+      propertyPath: SpawnMinFrequency
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7265593275119864357, guid: b5a45792fc501ba429651436af222804, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
