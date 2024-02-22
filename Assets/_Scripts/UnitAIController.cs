@@ -18,6 +18,9 @@ public class UnitAIController : MonoBehaviour
 
     [Header("Unit spawning frequency:")]
     [SerializeField]
+    [Range(0, 4)]
+    private int initialUnitsToSpawn = 4;
+    [SerializeField]
     private Unit[] unitsToSpawn;
     [SerializeField]
     private int unitMaxCount = 30;
@@ -33,7 +36,8 @@ public class UnitAIController : MonoBehaviour
     void Start()
     {
         CalculateBoardLimits();
-        InvokeRepeating("SpawnUnits", 0.1f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
+        SpawnInitialUnits();
+        InvokeRepeating("SpawnUnitsRandomly", 5f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
         InvokeRepeating("GiveOrders", 0.2f, OrderFrequency);
     }
     private void GiveOrders()
@@ -45,12 +49,33 @@ public class UnitAIController : MonoBehaviour
             u.SetTargetCoordinate(DetermineRandomCoordinate());
         }
     }
-    private void SpawnUnits()
+    private void SpawnInitialUnits()
+    {
+        int i = initialUnitsToSpawn;
+        
+        foreach (Transform spawn in spawnLocations)
+        {
+            if (i > 0)
+            {
+                if (unitsToSpawn.Length <= 0) { return; }
+                if (units.Count > unitMaxCount) { return; }
+                int unitIndex = Random.Range(0, unitsToSpawn.Length);
+                Unit u = Instantiate(unitsToSpawn[unitIndex], new Vector3(spawn.position.x, spawn.position.y, 1f), Quaternion.identity);
+                units.Add(u);
+                u.OnDeath += RemoveUnit;
+                u.transform.parent = null;
+                u.SetTargetCoordinate(DetermineRandomCoordinate());
+                i--;
+            }
+        }
+    }
+    private void SpawnUnitsRandomly()
     {        
         if (unitsToSpawn.Length <= 0) { return; }
         if (units.Count > unitMaxCount) { return; }   
-        int index = Random.Range(0, unitsToSpawn.Length);
-        Unit u = Instantiate(unitsToSpawn[index], transform);
+        int unitIndex = Random.Range(0, unitsToSpawn.Length);
+        int spawnLocIndex = Random.Range(0, spawnLocations.Length);
+        Unit u = Instantiate(unitsToSpawn[unitIndex], new Vector3(spawnLocations[spawnLocIndex].transform.position.x, spawnLocations[spawnLocIndex].transform.position.y, 1f), Quaternion.identity);
         units.Add(u);
         u.OnDeath += RemoveUnit;
         u.transform.parent = null;
@@ -87,5 +112,5 @@ public class UnitAIController : MonoBehaviour
         bottomLimit = (gameBoard.BoardYSize / 2f - 0.1f) * -1f;
         leftLimit = (gameBoard.BoardXSize / 2f - 0.3f) * -1f;
         rightLimit = gameBoard.BoardXSize / 2f - 0.3f;
-    }
+    }    
 }

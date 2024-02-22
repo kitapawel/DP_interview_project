@@ -7,10 +7,13 @@ public class MarkoPoloUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textMeshPro;
     [SerializeField]
+    private RectTransform infoPanel;
+    [SerializeField]
+    private RectTransform bloodPanel;
+    [SerializeField]
     private Button solveButton;
     [SerializeField]
-    private Image blood;
-    [SerializeField]
+    private Image bloodPrefab;
     private int bloodValue = 0;
     [SerializeField]
     private int sacrificeRequirement = 10;
@@ -22,6 +25,8 @@ public class MarkoPoloUI : MonoBehaviour
             Debug.LogError("TextMeshPro component is not assigned!");
             return;
         }
+        infoPanel.gameObject.SetActive(true);
+        solveButton.gameObject.SetActive(false);
     }
 
     private void AdvancedSolution()
@@ -65,5 +70,26 @@ public class MarkoPoloUI : MonoBehaviour
     public void SolveMarkoPolo()
     {
         AdvancedSolution();
+    }
+    private void OnEnable()
+    {
+        BloodSacrifice.OnClick += HandleClickEvent;
+    }
+    private void OnDisable()
+    {
+        BloodSacrifice.OnClick -= HandleClickEvent;
+    }
+    private void HandleClickEvent()
+    {
+        bloodValue++;
+        if (bloodValue > 10) { return; }
+        Instantiate(bloodPrefab, bloodPanel);
+
+        if (bloodValue == 10) 
+        {
+            infoPanel.gameObject.SetActive(false);
+            solveButton.gameObject.SetActive(true);
+        }
+
     }
 }
