@@ -20,7 +20,6 @@ public class SpriteSelector : MonoBehaviour
             return _instance;
         }
     }
-    [SerializeField]
     private Unit selectedUnit = null;
     [SerializeField]
     private TextMeshProUGUI nameText;

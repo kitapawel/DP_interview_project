@@ -34,8 +34,7 @@ public class MarkoPoloUI : MonoBehaviour
         solveButton.gameObject.SetActive(false);
         audioSource = GetComponent<AudioSource>();
     }
-
-    private void AdvancedSolution()
+    private void MarkoPoloSolution()
     {
         textMeshPro.text = "";
 
@@ -51,31 +50,9 @@ public class MarkoPoloUI : MonoBehaviour
             textMeshPro.text += output + "\n";
         }
     }
-    private void BasicSolution()
-    {
-        for (int i = 1; i <= 100; i++)
-        {
-            if (i % 3 == 0 && i % 5 == 0)
-            {
-                Debug.Log("MarkoPoloUI");
-            }
-            else if (i % 3 == 0)
-            {
-                Debug.Log("Marko");
-            }
-            else if (i % 5 == 0)
-            {
-                Debug.Log("Polo");
-            }
-            else
-            {
-                Debug.Log(i);
-            }
-        }
-    }
     public void SolveMarkoPolo()
     {
-        AdvancedSolution();
+        MarkoPoloSolution();
     }
     private void OnEnable()
     {

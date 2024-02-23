@@ -76,8 +76,6 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     {
         targetCoordinate = target;
     }
-
-
     private void MoveTowardsTarget()
     {
         if (isAttacking) { return; }
@@ -127,7 +125,6 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     }
     void ChangeAnimationState(string newAnimation)
     {
-        //if (!isAlive) { return; }
         if (currentAnimaton != newAnimation)
         {
             animator.Play(newAnimation);
@@ -166,7 +163,6 @@ public class Unit : MonoBehaviour, IProvideUnitDetails
     {
         //Percentage value introduced if for some reason other HP system is introduced later
         float currentHPPercentage = (float)currentHP / (float)maxHP;
-        Debug.Log(currentHPPercentage);
         if (currentHPPercentage >= 1f)
         {
             spriteRenderer.color = REGULAR_COLOR;
