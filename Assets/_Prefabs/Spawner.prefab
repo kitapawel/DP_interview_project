@@ -429,8 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6907af23d61703499563b2514dec483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  units: []
-  OrderFrequency: 3
+  OrderFrequency: 1
   initialUnitsToSpawn: 4
   unitsToSpawn:
   - {fileID: 9132917958487808457, guid: a68671ae16de4a9449ab2461518804d2, type: 3}

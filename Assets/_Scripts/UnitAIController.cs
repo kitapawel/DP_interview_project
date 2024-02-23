@@ -1,10 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitAIController : MonoBehaviour
 {
     [Header("Unit order settings:")]
-    [SerializeField]
     private List<Unit> units = new List<Unit>();
     private BoardController gameBoard;
     private float topLimit = 4f;
@@ -12,6 +12,7 @@ public class UnitAIController : MonoBehaviour
     private float leftLimit = -4f;
     private float rightLimit = 4f;
     [SerializeField]
+    [Range(1f, 5f)]
     private float OrderFrequency = 3f;
 
     [Header("Unit spawning frequency:")]
@@ -21,13 +22,14 @@ public class UnitAIController : MonoBehaviour
     [SerializeField]
     private Unit[] unitsToSpawn;
     [SerializeField]
+    [Range(6,60)]
     private int unitMaxCount = 30;
     [SerializeField]
     private Transform[] spawnLocations;
-    [Range(2f, 3.99f)]
+    [Range(0.1f, 3f)]
     [SerializeField]
     private float SpawnMinFrequency = 2f;
-    [Range(4f, 6f)]
+    [Range(3.01f, 6f)]
     [SerializeField]
     private float SpawnMaxFrequency = 6f;
 
@@ -35,16 +37,26 @@ public class UnitAIController : MonoBehaviour
     {
         CalculateBoardLimits();
         SpawnInitialUnits();
-        InvokeRepeating("SpawnUnitsRandomly", 2f, DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
-        InvokeRepeating("GiveOrders", 1f, OrderFrequency);
+        StartCoroutine(SpawnUnitsRepeatedly());
+        StartCoroutine(GiveOrders());
     }
-    private void GiveOrders()
+    private IEnumerator SpawnUnitsRepeatedly()
     {
-        if (units.Count <= 0) { return; }
-
-        foreach (Unit u in units)
-        {            
-            u.SetTargetCoordinate(DetermineRandomCoordinate());
+        while (true)
+        {
+            yield return new WaitForSeconds(DetermineRandomSpawnFrequency(SpawnMinFrequency, SpawnMaxFrequency));
+            SpawnUnitsRandomly();
+        }
+    }
+    private IEnumerator GiveOrders()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(OrderFrequency);
+            foreach (Unit u in units)
+            {
+                u.SetTargetCoordinate(DetermineRandomCoordinate());
+            }
         }
     }
     private void SpawnInitialUnits()
@@ -62,7 +74,6 @@ public class UnitAIController : MonoBehaviour
                 units.Add(u);
                 u.OnDeath += RemoveUnit;
                 u.transform.parent = null;
-                u.SetTargetCoordinate(DetermineRandomCoordinate());
                 i--;
             }
         }
@@ -70,14 +81,13 @@ public class UnitAIController : MonoBehaviour
     private void SpawnUnitsRandomly()
     {        
         if (unitsToSpawn.Length <= 0) { return; }
-        if (units.Count > unitMaxCount) { return; }   
+        if (units.Count >= unitMaxCount) { return; }   
         int unitIndex = Random.Range(0, unitsToSpawn.Length);
         int spawnLocIndex = Random.Range(0, spawnLocations.Length);
         Unit u = Instantiate(unitsToSpawn[unitIndex], new Vector3(spawnLocations[spawnLocIndex].transform.position.x, spawnLocations[spawnLocIndex].transform.position.y, 1f), Quaternion.identity);
         units.Add(u);
         u.OnDeath += RemoveUnit;
         u.transform.parent = null;
-        u.SetTargetCoordinate(DetermineRandomCoordinate());
     }
     private float DetermineRandomSpawnFrequency(float min, float max)
     {
