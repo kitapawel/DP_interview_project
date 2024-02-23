@@ -203,6 +203,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: MarcoPoloCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2897453020139130406, guid: b31af31b521001048a20095db3746051, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 717.4937
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897453020139130406, guid: b31af31b521001048a20095db3746051, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -312
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124215158028428952, guid: b31af31b521001048a20095db3746051, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124215158028428952, guid: b31af31b521001048a20095db3746051, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 4843445635620754358, guid: b31af31b521001048a20095db3746051, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -296,6 +312,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 391150867530021727, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 391150867530021727, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 391150867530021727, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 395.17725
+      objectReference: {fileID: 0}
+    - target: {fileID: 391150867530021727, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1621
+      objectReference: {fileID: 0}
+    - target: {fileID: 391150867530021727, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -114
+      objectReference: {fileID: 0}
     - target: {fileID: 3115814957711935784, guid: 8e0824a3fdadd1d4fb6a597436fa2ced, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -510,14 +546,6 @@ PrefabInstance:
     - target: {fileID: 6240217514115221585, guid: b5a45792fc501ba429651436af222804, type: 3}
       propertyPath: m_Name
       value: Spawner
-      objectReference: {fileID: 0}
-    - target: {fileID: 6834275976811160192, guid: b5a45792fc501ba429651436af222804, type: 3}
-      propertyPath: SpawnMaxFrequency
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6834275976811160192, guid: b5a45792fc501ba429651436af222804, type: 3}
-      propertyPath: SpawnMinFrequency
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7265593275119864357, guid: b5a45792fc501ba429651436af222804, type: 3}
       propertyPath: m_LocalPosition.x

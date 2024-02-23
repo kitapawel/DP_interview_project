@@ -7,13 +7,18 @@ public class MarkoPoloUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI textMeshPro;
     [SerializeField]
-    private RectTransform infoPanel;
+    private RectTransform bloodPanelParent;
     [SerializeField]
     private RectTransform bloodPanel;
     [SerializeField]
     private Button solveButton;
     [SerializeField]
     private Image bloodPrefab;
+    [SerializeField]
+    private AudioClip bloodDropSound;
+    [SerializeField]
+    private AudioClip bloodDropFullSound;
+    private AudioSource audioSource;
     private int bloodValue = 0;
     [SerializeField]
     private int sacrificeRequirement = 10;
@@ -25,8 +30,9 @@ public class MarkoPoloUI : MonoBehaviour
             Debug.LogError("TextMeshPro component is not assigned!");
             return;
         }
-        infoPanel.gameObject.SetActive(true);
+        bloodPanelParent.gameObject.SetActive(true);
         solveButton.gameObject.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void AdvancedSolution()
@@ -82,14 +88,22 @@ public class MarkoPoloUI : MonoBehaviour
     private void HandleClickEvent()
     {
         bloodValue++;
-        if (bloodValue > 10) { return; }
-        Instantiate(bloodPrefab, bloodPanel);
-
-        if (bloodValue == 10) 
+        if (bloodValue > 10) 
         {
-            infoPanel.gameObject.SetActive(false);
+            audioSource.PlayOneShot(bloodDropSound);
+            return;
+        }
+        if (bloodValue == 10)
+        {
+            Instantiate(bloodPrefab, bloodPanel);
+            audioSource.PlayOneShot(bloodDropFullSound);
+            bloodPanelParent.gameObject.SetActive(false);
             solveButton.gameObject.SetActive(true);
         }
-
+        else
+        {
+            audioSource.PlayOneShot(bloodDropSound);
+            Instantiate(bloodPrefab, bloodPanel);            
+        }
     }
 }
